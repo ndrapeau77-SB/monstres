@@ -184,14 +184,38 @@
   <audio id="dreadwarrior" src="dreadwarrior.mp3" preload="auto"></audio>
   <audio id="dragon" src="dragon.mp3" preload="auto"></audio>
 
-  <script>
-    function playSound(id) {
-      const sound = document.getElementById(id);
-      if (!sound) return;
+<script>
+  const soundFiles = {
+    porte: "porte.mp3",
+    rat: "rat.mp3",
+    squelette: "squelette.mp3",
+    zombie: "zombie.mp3",
+    momie: "momie.mp3",
+    gobelin: "gobelin.mp3",
+    ogre: "ogre.mp3",
+    abomination: "abomination.mp3",
+    gargouille: "gargouille.mp3",
+    dreadwarrior: "dreadwarrior.mp3",
+    dragon: "dragon.mp3"
+  };
 
-      sound.currentTime = 0;
-      sound.play().catch(() => {});
+  function playSound(id) {
+    const file = soundFiles[id];
+    if (!file) return;
+
+    const sound = new Audio(file);
+    sound.preload = "auto";
+    sound.volume = 1.0;
+    sound.muted = false;
+    sound.setAttribute("playsinline", "");
+
+    const playPromise = sound.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((error) => {
+        console.log("Lecture bloquée ou interrompue :", error);
+      });
     }
-  </script>
+  }
+</script>
 </body>
 </html>
